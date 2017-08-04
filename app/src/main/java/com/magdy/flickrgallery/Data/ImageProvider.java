@@ -10,21 +10,16 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-/**
- * Created by engma on 8/3/2017.
- */
 
-public class ImageProvider  extends ContentProvider {
-    private static final UriMatcher uriMatcher = buildUriMatcher();
+public class ImageProvider extends ContentProvider {
     private static final int Image = 100;
+    private DBHelper dbHelper;
 
     private static UriMatcher buildUriMatcher() {
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         matcher.addURI(Contract.AUTHORITY, Contract.PATH_IMAGES, Image);
         return matcher;
     }
-
-    private DBHelper dbHelper;
 
     @Override
     public boolean onCreate() {
@@ -81,7 +76,8 @@ public class ImageProvider  extends ContentProvider {
         if (context != null) {
             context.getContentResolver().notifyChange(uri, null);
         }
-        return returnUri;    }
+        return returnUri;
+    }
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {

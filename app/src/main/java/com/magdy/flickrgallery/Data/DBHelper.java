@@ -6,16 +6,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.magdy.flickrgallery.Data.Contract.Image;
 
-/**
- * Created by engma on 5/23/2017.
- */
 
-public class DBHelper extends SQLiteOpenHelper {
+class DBHelper extends SQLiteOpenHelper {
 
     private static final String NAME = "Images.db";
     private static final int VERSION = 1;
 
-    public DBHelper(Context context) {
+    DBHelper(Context context) {
         super(context, NAME, null, VERSION);
     }
 

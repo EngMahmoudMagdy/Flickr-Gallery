@@ -1,7 +1,6 @@
-package com.magdy.flickrgallery;
+package com.magdy.flickrgallery.Adapters;
 
 import android.content.Context;
-
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
@@ -10,23 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.magdy.flickrgallery.GridInfoListener;
+import com.magdy.flickrgallery.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.List;
 
 
- class GridRecyclerAdapter  extends RecyclerView.Adapter<GridRecyclerAdapter.SimpleViewHolder> {
+public class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapter.SimpleViewHolder> {
 
     private List<String> images;
     private Context context;
 
-    GridInfoListener fListener;
-    GridRecyclerAdapter(Context context , List<String>images , GridInfoListener fl)
-    {
-        this.images = images ;
-        this.context = context ;
-        fListener = fl ;
+    private GridInfoListener fListener;
+
+    public GridRecyclerAdapter(Context context, List<String> images, GridInfoListener fl) {
+        this.images = images;
+        this.context = context;
+        fListener = fl;
 
     }
 
@@ -37,8 +38,8 @@ import java.util.List;
     }
 
     @Override
-    public void onBindViewHolder(final SimpleViewHolder holder, final int position) {
-        final String image= images.get(position);
+    public void onBindViewHolder(final SimpleViewHolder holder, int position) {
+        final String image = images.get(position);
 
         Picasso.with(context).load(image).into(new Target() {
             @Override
@@ -59,7 +60,7 @@ import java.util.List;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fListener.setSelected(position);
+                fListener.setSelected(holder.getAdapterPosition());
             }
         });
     }
@@ -69,13 +70,14 @@ import java.util.List;
         return images.size();
     }
 
-     class SimpleViewHolder extends RecyclerView.ViewHolder{
+    class SimpleViewHolder extends RecyclerView.ViewHolder {
 
-         ImageView  headImage ;
-         SimpleViewHolder(View itemView) {
+        ImageView headImage;
+
+        SimpleViewHolder(View itemView) {
             super(itemView);
 
-             headImage = (ImageView) itemView.findViewById(R.id.head_image);
+            headImage = itemView.findViewById(R.id.head_image);
 
         }
     }

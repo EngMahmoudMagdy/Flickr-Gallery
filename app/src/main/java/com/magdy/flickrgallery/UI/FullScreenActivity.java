@@ -1,34 +1,36 @@
-package com.magdy.flickrgallery;
+package com.magdy.flickrgallery.UI;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.WindowManager;
+
+import com.magdy.flickrgallery.Adapters.ViewPagerAdapter;
 import com.magdy.flickrgallery.Data.Contract;
+import com.magdy.flickrgallery.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FullScreenActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
+public class FullScreenActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    ViewPager viewPager;
+    ExtendedViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
-    List<String> links ;
+    List<String> links;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen);
-        getWindow().addFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN );
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         links = new ArrayList<>();
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ExtendedViewPager) findViewById(R.id.viewpager);
 
-        viewPagerAdapter = new ViewPagerAdapter(this,links);
+        viewPagerAdapter = new ViewPagerAdapter(this, links);
         viewPager.setAdapter(viewPagerAdapter);
 
         getSupportLoaderManager().initLoader(0, null, this);
@@ -46,19 +48,18 @@ public class FullScreenActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         links.clear();
-        if (data !=null)
-        {
+        if (data != null) {
             for (int i = 0; i < data.getCount(); i++) {
-                String s ;
+                String s;
                 data.moveToPosition(i);
-                s=data.getString(Contract.Image.POSITION_IMAGE_LINK);
+                s = data.getString(Contract.Image.POSITION_IMAGE_LINK);
                 links.add(s);
             }
             viewPagerAdapter.notifyDataSetChanged();
         }
         Intent intent = getIntent();
-        if (intent!=null){
-            viewPager.setCurrentItem(intent.getIntExtra("pos",0));
+        if (intent != null) {
+            viewPager.setCurrentItem(intent.getIntExtra("pos", 0));
         }
     }
 
