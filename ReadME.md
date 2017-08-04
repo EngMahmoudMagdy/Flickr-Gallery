@@ -25,6 +25,10 @@ __This is an Android Application that is used to fetch photos from [Flickr websi
 * Picasso Library was used to download and cache the images in the GridAdapter after getting the links
 	
 ![screenshot here](/screens/screen1.png)
+
+* for horizontal view
+
+![screenshot here](/screens/screen5.png)
 	
 * SwipeRefreshLayout was used to refresh the page by swipe down to get the new images from the server
 	
